@@ -1,13 +1,11 @@
 package com.example.helloworld.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class HelloWorldConfig {
-  public HelloWorldConfig() {}
+public class DbConfig {
+  public DbConfig() {}
 
-  @Bean
   public String helloworldConfig() {
     return "Hello World from config!!";
   }
