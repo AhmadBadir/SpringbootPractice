@@ -1,3 +1,5 @@
+package com.example.helloworld.cmd;
+
 import com.example.helloworld.model.Department;
 import com.example.helloworld.model.Employee;
 import com.example.helloworld.repository.DepartmentRepository;
