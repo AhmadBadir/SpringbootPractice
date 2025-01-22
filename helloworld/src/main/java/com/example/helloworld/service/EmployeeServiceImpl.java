@@ -12,12 +12,10 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
   private final EmployeeRepository employeeRepository;
-  private final DepartmentRepository departmentRepository;
 
   @Autowired
-  public EmployeeServiceImpl(EmployeeRepository employeeRepository, DepartmentRepository departmentRepository) {
+  public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
     this.employeeRepository = employeeRepository;
-    this.departmentRepository = departmentRepository;
   }
 
   @Override

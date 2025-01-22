@@ -1,4 +1,5 @@
 package com.example.helloworld.model;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,8 @@ public class Employee {
     private long id;
     @NonNull
     private String name;
+    @NonNull
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;

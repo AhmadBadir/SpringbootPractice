@@ -1,5 +1,7 @@
 package com.example.helloworld.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,7 @@ public class Department {
     private Long id;
     @NonNull
     private String name;
+    @JsonBackReference
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private Set<Employee> employees = new HashSet<>();
 
