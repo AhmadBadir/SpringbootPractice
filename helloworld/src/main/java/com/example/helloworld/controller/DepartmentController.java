@@ -25,4 +25,9 @@ public class DepartmentController {
   public ResponseEntity<List<Department>> getDepartmentByEmployeeCount(@PathVariable int count) {
     return ResponseEntity.ok(departmentService.getDepartmentAccordingToSize(count));
   }
+
+  @GetMapping("/departments/join/{count}")
+  public ResponseEntity<List<Department>> getDepartmentByEmployeeCountUsingJoin(@PathVariable int count) {
+    return ResponseEntity.ok(departmentService.getDepartmentAccordingToSizeByJoin(count));
+  }
 }

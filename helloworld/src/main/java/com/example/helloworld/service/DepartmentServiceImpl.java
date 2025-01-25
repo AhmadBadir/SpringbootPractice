@@ -21,5 +21,10 @@ public class DepartmentServiceImpl implements DepartmentService {
   public List<Department> getDepartmentAccordingToSize(int employeeCount) {
     return departmentRepository.findByEmployeesSizeGreaterThan(employeeCount);
   }
+
+  @Override
+  public List<Department> getDepartmentAccordingToSizeByJoin(int employeeCount) {
+    return departmentRepository.findByEmployeesSizeGreaterThanUsingJoin(employeeCount);
+  }
 }
 

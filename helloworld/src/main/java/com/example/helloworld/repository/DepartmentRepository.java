@@ -13,4 +13,7 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
       "SELECT d from Department d WHERE (\n"
           + "SELECT COUNT(e) FROM Employee e WHERE e.department = d) > :size")
   List<Department> findByEmployeesSizeGreaterThan(@Param("size") int size);
+
+  @Query("SELECT d from Department d JOIN d.employees e GROUP BY d HAVING COUNT(e) > :size")
+  List<Department> findByEmployeesSizeGreaterThanUsingJoin(@Param("size") int size);
 }

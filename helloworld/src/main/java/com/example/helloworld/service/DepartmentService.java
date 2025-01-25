@@ -10,4 +10,7 @@ import java.util.List;
 public interface DepartmentService {
 
   List<Department> getDepartmentAccordingToSize(int employeeCount);
+
+  List<Department> getDepartmentAccordingToSizeByJoin(int employeeCount);
+
 }
