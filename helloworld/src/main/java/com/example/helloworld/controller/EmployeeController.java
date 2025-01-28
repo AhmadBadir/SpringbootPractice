@@ -8,10 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,12 +28,13 @@ public class EmployeeController {
   @ApiResponse(responseCode = "200", description = "List of employees",
           content = {@Content(mediaType = "application/json",
                   schema = @Schema(implementation = Employee.class))})
-  public ResponseEntity<List<Employee>> getAllEmployees() {
-    return ResponseEntity.ok(employeeService.getAllEmployees());
+  public ResponseEntity<List<Employee>> getAllEmployees(@RequestParam(required = false) List<Long> ids) {
+     return ResponseEntity.ok(employeeService.getEmployeeByIds(ids));
   }
 
+
   @GetMapping("/employees/department/{departmentId}")
-  public ResponseEntity<List<Employee>> getAllEmployees(@PathVariable Long departmentId) {
+  public ResponseEntity<List<Employee>> getAllEmployees(@PathVariable  @RequestParam(required = false)Long departmentId) {
     return ResponseEntity.ok(employeeService.getEmployeesByDepartment(departmentId));
   }
 }

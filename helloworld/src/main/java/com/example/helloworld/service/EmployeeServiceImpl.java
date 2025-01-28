@@ -27,5 +27,10 @@ public class EmployeeServiceImpl implements EmployeeService {
   public List<Employee> getEmployeesByDepartment(Long departmentId) {
     return employeeRepository.findByDepartmentId(departmentId);
   }
+
+  @Override
+  public List<Employee> getEmployeeByIds(List<Long> ids) {
+   return (ids == null || ids.isEmpty())? getAllEmployees() : employeeRepository.finByIds(ids);
+  }
 }
 
