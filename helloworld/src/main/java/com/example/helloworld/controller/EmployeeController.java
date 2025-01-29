@@ -38,6 +38,17 @@ public class EmployeeController {
   }
 
 
+  //return using post, also  I am not using response entity here for proof of concept
+  @PostMapping("/employees")
+  public List<Employee> getAllEmployeesUsingPost(@RequestBody(required = false) List<Long> ids,
+                                                        @RequestParam(required = false, defaultValue = "id") String sortBy,
+                                                        @RequestParam(required = false, defaultValue = "ASC") String direction) {
+    Sort.Direction sortDirection = Sort.Direction.fromString(direction);
+    Sort sort = Sort.by(sortDirection, sortBy);
+    return employeeService.getEmployeeByIds(ids, sort);
+  }
+
+
   @GetMapping("/employees/department/{departmentId}")
   public ResponseEntity<List<Employee>> getAllEmployees(@PathVariable Long departmentId) {
     return ResponseEntity.ok(employeeService.getEmployeesByDepartment(departmentId));
