@@ -2,6 +2,7 @@ package com.example.helloworld.service;
 
 
 import com.example.helloworld.model.Employee;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ public interface EmployeeService {
 
   List<Employee> getEmployeesByDepartment(Long departmentId);
 
-    List<Employee> getEmployeeByIds(List<Long> ids);
+    List<Employee> getEmployeeByIds(List<Long> ids, Sort sort);
 }

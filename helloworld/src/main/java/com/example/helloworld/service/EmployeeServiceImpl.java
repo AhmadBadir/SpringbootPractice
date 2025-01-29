@@ -4,6 +4,7 @@ import com.example.helloworld.model.Employee;
 import com.example.helloworld.repository.DepartmentRepository;
 import com.example.helloworld.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,8 +30,8 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   @Override
-  public List<Employee> getEmployeeByIds(List<Long> ids) {
-   return (ids == null || ids.isEmpty())? getAllEmployees() : employeeRepository.finByIds(ids);
+  public List<Employee> getEmployeeByIds(List<Long> ids, Sort sort) {
+   return (ids == null || ids.isEmpty())? getAllEmployees() : employeeRepository.finByIds(ids, sort);
   }
 }
 
