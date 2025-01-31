@@ -12,5 +12,8 @@ public interface EmployeeService {
 
   List<Employee> getEmployeesByDepartment(Long departmentId);
 
-    List<Employee> getEmployeeByIds(List<Long> ids, Sort sort);
+  List<Employee> getEmployeeByIds(List<Long> ids, Sort sort);
+
+  Employee createEmployee(String name, Long departmentId);
+
 }
