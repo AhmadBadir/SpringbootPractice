@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,11 +42,19 @@ public class EmployeeController {
   //return using post, also  I am not using response entity here for proof of concept
   @PostMapping("/employees")
   public List<Employee> getAllEmployeesUsingPost(@RequestBody(required = false) List<Long> ids,
-                                                        @RequestParam(required = false, defaultValue = "id") String sortBy,
-                                                        @RequestParam(required = false, defaultValue = "ASC") String direction) {
+                                                 @RequestParam(required = false, defaultValue = "id") String sortBy,
+                                                 @RequestParam(required = false, defaultValue = "ASC") String direction) {
     Sort.Direction sortDirection = Sort.Direction.fromString(direction);
     Sort sort = Sort.by(sortDirection, sortBy);
     return employeeService.getEmployeeByIds(ids, sort);
+  }
+
+  //return using post, also  I am not using response entity here for proof of concept
+  @PostMapping("/employees")
+  @ResponseStatus(HttpStatus.CREATED)
+  public Employee createEmployee(@RequestParam(required = true) String name,
+                                 @RequestParam(required = true, defaultValue = "id") Long departmentId) {
+    return employeeService.createEmployee(name, departmentId);
   }
 
 
