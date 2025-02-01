@@ -1,5 +1,6 @@
 package com.example.helloworld.controller;
 
+import com.example.helloworld.dto.EmployeeCreationDTO;
 import com.example.helloworld.model.Employee;
 import com.example.helloworld.service.EmployeeServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -55,6 +56,13 @@ public class EmployeeController {
   public Employee createEmployee(@RequestParam(required = true) String name,
                                  @RequestParam(required = true, defaultValue = "id") Long departmentId) {
     return employeeService.createEmployee(name, departmentId);
+  }
+
+  //return using post, also  I am not using response entity here for proof of concept
+  @PostMapping("/employees")
+  @ResponseStatus(HttpStatus.CREATED)
+  public Employee createEmployee(@RequestBody EmployeeCreationDTO employeeDTO) {
+    return employeeService.createEmployee(employeeDTO.getName(), employeeDTO.getDepartmentId());
   }
 
 
