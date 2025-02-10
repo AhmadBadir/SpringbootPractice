@@ -1,22 +1,23 @@
 package com.example.helloworld.controller;
 
-import com.example.helloworld.dto.EmployeeCreationDTO;
 import com.example.helloworld.model.Employee;
 import com.example.helloworld.service.EmployeeServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
+@Validated
 public class EmployeeController {
 
   private final EmployeeServiceImpl employeeService;
@@ -31,12 +32,14 @@ public class EmployeeController {
   @ApiResponse(responseCode = "200", description = "List of employees",
           content = {@Content(mediaType = "application/json",
                   schema = @Schema(implementation = Employee.class))})
-  public ResponseEntity<List<Employee>> getAllEmployees(@RequestParam(required = false) List<Long> ids,
-                                                        @RequestParam(required = false, defaultValue = "id") String sortBy,
-                                                        @RequestParam(required = false, defaultValue = "ASC") String direction) {
+  public List<Employee> getAllEmployees(@RequestParam(required = false)
+                                          @Pattern(regexp = "^\\d+(,\\d+)*$", message = "IDs must be a comma-separated list of numbers")
+                                        List<Long> ids,
+                                        @RequestParam(required = false, defaultValue = "id") String sortBy,
+                                        @RequestParam(required = false, defaultValue = "ASC") String direction) {
     Sort.Direction sortDirection = Sort.Direction.fromString(direction);
     Sort sort = Sort.by(sortDirection, sortBy);
-    return ResponseEntity.ok(employeeService.getEmployeeByIds(ids, sort));
+    return employeeService.getEmployeeByIds(ids, sort);
   }
 
 
@@ -50,20 +53,20 @@ public class EmployeeController {
     return employeeService.getEmployeeByIds(ids, sort);
   }
 
-  //return using post, also  I am not using response entity here for proof of concept
-  @PostMapping("/employees")
-  @ResponseStatus(HttpStatus.CREATED)
-  public Employee createEmployee(@RequestParam(required = true) String name,
-                                 @RequestParam(required = true, defaultValue = "id") Long departmentId) {
-    return employeeService.createEmployee(name, departmentId);
-  }
-
-  //return using post, also  I am not using response entity here for proof of concept
-  @PostMapping("/employees")
-  @ResponseStatus(HttpStatus.CREATED)
-  public Employee createEmployee(@RequestBody EmployeeCreationDTO employeeDTO) {
-    return employeeService.createEmployee(employeeDTO.getName(), employeeDTO.getDepartmentId());
-  }
+//  //return using post, also  I am not using response entity here for proof of concept
+//  @PostMapping("/employees")
+//  @ResponseStatus(HttpStatus.CREATED)
+//  public Employee createEmployee(@RequestParam(required = true) String name,
+//                                 @RequestParam(required = true, defaultValue = "id") Long departmentId) {
+//    return employeeService.createEmployee(name, departmentId);
+//  }
+//
+//  //return using post, also  I am not using response entity here for proof of concept
+//  @PostMapping("/employees")
+//  @ResponseStatus(HttpStatus.CREATED)
+//  public Employee createEmployee(@RequestBody EmployeeCreationDTO employeeDTO) {
+//    return employeeService.createEmployee(employeeDTO.getName(), employeeDTO.getDepartmentId());
+//  }
 
 
   @GetMapping("/employees/department/{departmentId}")
