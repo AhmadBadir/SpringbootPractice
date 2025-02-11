@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
     //Handle Invalid URLS (404 - not found)
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<?> handleNoHandlerFoundException(NoHandlerFoundException ex) {
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(404).body(Map.of("error", "Invalid URL. Please check and try again."));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
